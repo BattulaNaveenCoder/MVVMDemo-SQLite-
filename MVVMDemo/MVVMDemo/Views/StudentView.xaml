@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MVVMDemo.Models"
+             xmlns:local1="clr-namespace:MVVMDemo.ViewModels"
+             x:Class="MVVMDemo.Views.StudentView">    
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame Margin="8,10,8,0" HasShadow="True" CornerRadius="10" BackgroundColor="AliceBlue">
+                <StackLayout>
+                    <Label Text="Student Details" TextColor="Black" HorizontalOptions="Center" FontSize="20" FontAttributes="Bold"/>
+                    <StackLayout>
+                        <StackLayout>
+                            <Entry Placeholder="Enter Your RollNumber" Text="{Binding Student.RollNumber,Mode=TwoWay}"/>
+                            <Entry Placeholder="Enter Your Name" Text="{Binding Student.Name,Mode=TwoWay}"/>                            
+                            <StackLayout Orientation="Horizontal">                               
+                                <Picker Title="Gender" x:Name="picker" SelectedItem="{Binding Student.Gender,Mode=TwoWay}"  HorizontalOptions="FillAndExpand">
+                                    <Picker.Items>
+                                        <x:String>Male</x:String>
+                                        <x:String>Female</x:String>
+                                    </Picker.Items>
+                                </Picker>
+                            </StackLayout>                            
+                            <Entry Placeholder="Enter Your Address" Text="{Binding Student.Address,Mode=TwoWay}"/>
+                        </StackLayout>
+                        <Button Text="Submit" Command="{Binding Submitdata}"  />
+                    </StackLayout>
+                </StackLayout>                
+            </Frame>
+            <StackLayout>
+                <ListView HasUnevenRows="True" ItemsSource="{Binding Students }"  >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <SwipeView>
+                                    <SwipeView.LeftItems>
+                                        <SwipeItem Text="Delete" BackgroundColor="Red" Command="{Binding Source={RelativeSource AncestorType={x:Type local1:StudentViewModel}},Path=Delete_Clicked}" CommandParameter="{Binding .}"/>
+                                    </SwipeView.LeftItems>
+                                    <SwipeView.RightItems>
+                                        <SwipeItem Text="Upadate" BackgroundColor="Green" Command="{Binding Source={RelativeSource AncestorType={x:Type local1:StudentViewModel}},Path=Update_Clicked}" CommandParameter="{Binding .}" />
+                                    </SwipeView.RightItems>
+                                <Frame Margin="5" CornerRadius="8" BackgroundColor="LightBlue">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer />
+                                    </Frame.GestureRecognizers>
+                                    <StackLayout>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackLayout >
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label Text="RollNumber :" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
+                                                    <Label Text="{Binding RollNumber}" TextColor="Black" FontSize="14" FontAttributes="Bold"/>
+                                                </StackLayout>
+                                                <StackLayout  Orientation="Horizontal">
+                                                    <Label Text="Name :" TextColor="Black" FontSize="16" FontAttributes="Bold" VerticalOptions="Center"/>
+                                                    <Label Text="{Binding Name}" TextColor="Black" FontSize="14" FontAttributes="Bold" VerticalOptions="Center" />
+                                                </StackLayout>
+                                            </StackLayout>
+                                            <StackLayout Grid.Column="1" >
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label Text="Address :" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
+                                                    <Label Text="{Binding Address}" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
+                                                </StackLayout>
+                                                <StackLayout  Orientation="Horizontal">
+                                                    <Label Text="Gender :" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
+                                                    <Label Text="{Binding Gender}" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
+                                                </StackLayout>
+                                            </StackLayout>
+                                            <Label/>
+                                        </Grid>                                        
+                                    </StackLayout>
+                                </Frame>
+                                </SwipeView>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
